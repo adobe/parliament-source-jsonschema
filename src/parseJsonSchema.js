@@ -9,14 +9,14 @@
  *  OF ANY KIND, either express or implied. See the License for the specific language
  *  governing permissions and limitations under the License.
  */
-const RefParser = require("@apidevtools/json-schema-ref-parser")
+const RefParser = require('@apidevtools/json-schema-ref-parser')
 const propsToEscape = [
-  "$id",
-  "$schema",
-  "$defs",
-  "$vocabulary",
-  "$dynamicRef",
-  "$dynamicAnchor",
+  '$id',
+  '$schema',
+  '$defs',
+  '$vocabulary',
+  '$dynamicRef',
+  '$dynamicAnchor'
 ]
 
 const parseJsonSchema = async (file) => {
@@ -24,7 +24,7 @@ const parseJsonSchema = async (file) => {
     const schema = await RefParser.dereference(file)
     propsToEscape.forEach((prop) => {
       if (schema[prop]) {
-        const newPropName = prop.replace("$", "_")
+        const newPropName = prop.replace('$', '_')
         schema[newPropName] = schema[prop]
         delete schema[prop]
       }

@@ -10,10 +10,10 @@
  *  governing permissions and limitations under the License.
  */
 
-const glob = require("fast-glob")
-const parseJsonSchema = require("./src/parseJsonSchema")
+const glob = require('fast-glob')
+const parseJsonSchema = require('./src/parseJsonSchema')
 
-const { GraphQLJSON } = require("gatsby/graphql")
+const { GraphQLJSON } = require('gatsby/graphql')
 
 const reduceGraphQLToJson = (nodes) => {
   return nodes
@@ -31,14 +31,14 @@ exports.sourceNodes = async (
   const repoFiles = await glob(patterns, {
     cwd: path,
     absolute: true,
-    onlyFiles: true,
+    onlyFiles: true
   })
 
   // console.log(repoFiles)
   let i = 0
   for await (const file of repoFiles) {
-    if (file.endsWith(".schema.json")) {
-      console.log("New filename: ", file)
+    if (file.endsWith('.schema.json')) {
+      console.log('New filename: ', file)
       try {
         const schema = await parseJsonSchema(file)
         console.log(schema)
@@ -46,14 +46,14 @@ exports.sourceNodes = async (
           createNode({
             id: createNodeId(`json-schema-${i}`),
             ...schema,
-            slug: file.replace(path, ""),
+            slug: file.replace(path, ''),
             parent: null,
             children: [],
             internal: {
               type: `ParliamentJsonSchema`,
-              content: "",
-              contentDigest: createContentDigest(schema),
-            },
+              content: '',
+              contentDigest: createContentDigest(schema)
+            }
           })
           i++
         }
@@ -66,7 +66,7 @@ exports.sourceNodes = async (
 
 exports.setFieldsOnGraphQLNodeType = ({ type }) => {
   const { name, nodes } = type
-  if (name === "ParliamentJsonSchema") {
+  if (name === 'ParliamentJsonSchema') {
     return reduceGraphQLToJson(nodes)
   }
 }

@@ -10,104 +10,104 @@
  *  governing permissions and limitations under the License.
  */
 
-/*global test, expect*/
+/* global test, expect */
 
-const parseJsonSchema = require("../parseJsonSchema");
+const parseJsonSchema = require('../parseJsonSchema')
 
-test("Non existent file", async () => {
-  const parsedContent = await parseJsonSchema("./data/nope.person.schema.json");
+test('Non existent file', async () => {
+  const parsedContent = await parseJsonSchema('./data/nope.person.schema.json')
 
-  expect(parsedContent).toBeNull();
-});
+  expect(parsedContent).toBeNull()
+})
 
-test("Escapes $id", async () => {
+test('Escapes $id', async () => {
   const parsedContent = await parseJsonSchema(
-    "./src/__tests__/data/person.schema.json"
-  );
-  expect(parsedContent["$id"]).toBeUndefined();
-  expect(parsedContent._id).toBe("https://example.com/person.schema.json");
+    './src/__tests__/data/person.schema.json'
+  )
+  expect(parsedContent.$id).toBeUndefined()
+  expect(parsedContent._id).toBe('https://example.com/person.schema.json')
 
   const parsedContent2 = await parseJsonSchema(
-    "./src/__tests__/data/location.schema.json"
-  );
-  expect(parsedContent2["$id"]).toBeUndefined();
+    './src/__tests__/data/location.schema.json'
+  )
+  expect(parsedContent2.$id).toBeUndefined()
   expect(parsedContent2._id).toBe(
-    "https://example.com/geographical-location.schema.json"
-  );
+    'https://example.com/geographical-location.schema.json'
+  )
 
   const parsedContent3 = await parseJsonSchema(
-    "./src/__tests__/data/arrays.schema.json"
-  );
-  expect(parsedContent3["$id"]).toBeUndefined();
-  expect(parsedContent3._id).toBe("https://example.com/arrays.schema.json");
-});
+    './src/__tests__/data/arrays.schema.json'
+  )
+  expect(parsedContent3.$id).toBeUndefined()
+  expect(parsedContent3._id).toBe('https://example.com/arrays.schema.json')
+})
 
-test("Escapes $schema", async () => {
+test('Escapes $schema', async () => {
   const parsedContent = await parseJsonSchema(
-    "./src/__tests__/data/person.schema.json"
-  );
-  expect(parsedContent["$schema"]).toBeUndefined();
+    './src/__tests__/data/person.schema.json'
+  )
+  expect(parsedContent.$schema).toBeUndefined()
   expect(parsedContent._schema).toBe(
-    "https://json-schema.org/draft/2020-12/schema"
-  );
+    'https://json-schema.org/draft/2020-12/schema'
+  )
 
   const parsedContent2 = await parseJsonSchema(
-    "./src/__tests__/data/location.schema.json"
-  );
-  expect(parsedContent2["$schema"]).toBeUndefined();
+    './src/__tests__/data/location.schema.json'
+  )
+  expect(parsedContent2.$schema).toBeUndefined()
   expect(parsedContent2._schema).toBe(
-    "https://json-schema.org/draft/2020-12/schema"
-  );
+    'https://json-schema.org/draft/2020-12/schema'
+  )
 
   const parsedContent3 = await parseJsonSchema(
-    "./src/__tests__/data/arrays.schema.json"
-  );
-  expect(parsedContent3["$schema"]).toBeUndefined();
+    './src/__tests__/data/arrays.schema.json'
+  )
+  expect(parsedContent3.$schema).toBeUndefined()
   expect(parsedContent3._schema).toBe(
-    "https://json-schema.org/draft/2020-12/schema"
-  );
-});
+    'https://json-schema.org/draft/2020-12/schema'
+  )
+})
 
-test("Escapes $defs", async () => {
+test('Escapes $defs', async () => {
   const parsedContent = await parseJsonSchema(
-    "./src/__tests__/data/arrays.schema.json"
-  );
-  expect(parsedContent["$defs"]).toBeUndefined();
-  expect(parsedContent._defs).toBeDefined();
+    './src/__tests__/data/arrays.schema.json'
+  )
+  expect(parsedContent.$defs).toBeUndefined()
+  expect(parsedContent._defs).toBeDefined()
   expect(parsedContent._defs).toStrictEqual({
     veggie: {
-      type: "object",
-      required: ["veggieName", "veggieLike"],
+      type: 'object',
+      required: ['veggieName', 'veggieLike'],
       properties: {
         veggieName: {
-          type: "string",
-          description: "The name of the vegetable.",
+          type: 'string',
+          description: 'The name of the vegetable.'
         },
         veggieLike: {
-          type: "boolean",
-          description: "Do I like this vegetable?",
-        },
-      },
-    },
-  });
-});
+          type: 'boolean',
+          description: 'Do I like this vegetable?'
+        }
+      }
+    }
+  })
+})
 
-test("Escapes $vocabulary", async () => {
+test('Escapes $vocabulary', async () => {
   const parsedContent = await parseJsonSchema(
-    "./src/__tests__/data/vocabulary.schema.json"
-  );
-  expect(parsedContent["$vocabulary"]).toBeUndefined();
-  expect(parsedContent._vocabulary).toBeDefined();
+    './src/__tests__/data/vocabulary.schema.json'
+  )
+  expect(parsedContent.$vocabulary).toBeUndefined()
+  expect(parsedContent._vocabulary).toBeDefined()
   expect(parsedContent._vocabulary).toStrictEqual({
-    "https://example.com/vocab/example-vocab": true,
-  });
-});
+    'https://example.com/vocab/example-vocab': true
+  })
+})
 
-test("Escapes $dynamicAnchor", async () => {
+test('Escapes $dynamicAnchor', async () => {
   const parsedContent = await parseJsonSchema(
-    "./src/__tests__/data/vocabulary.schema.json"
-  );
-  expect(parsedContent["$dynamicAnchor"]).toBeUndefined();
-  expect(parsedContent._dynamicAnchor).toBeDefined();
-  expect(parsedContent._dynamicAnchor).toStrictEqual("meta");
-});
+    './src/__tests__/data/vocabulary.schema.json'
+  )
+  expect(parsedContent.$dynamicAnchor).toBeUndefined()
+  expect(parsedContent._dynamicAnchor).toBeDefined()
+  expect(parsedContent._dynamicAnchor).toStrictEqual('meta')
+})
