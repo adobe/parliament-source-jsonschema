@@ -38,10 +38,8 @@ exports.sourceNodes = async (
   let i = 0
   for await (const file of repoFiles) {
     if (file.endsWith('.schema.json')) {
-      console.log('New filename: ', file)
       try {
         const schema = await parseJsonSchema(file)
-        console.log(schema)
         if (schema) {
           createNode({
             id: createNodeId(`json-schema-${i}`),
