@@ -34,7 +34,30 @@ exports.sourceNodes = async (
     onlyFiles: true
   })
 
-  // console.log(repoFiles)
+  // Create dummy schema
+  const dummySchema = {
+    _id: '',
+    _schema: '',
+    description: '',
+    properties: {},
+    title: '',
+    type: '',
+    _defs: {},
+    required: []
+  }
+  createNode({
+    id: createNodeId(`json-schema-dummy`),
+    ...dummySchema,
+    slug: `/dummy-schema`,
+    parent: null,
+    children: [],
+    internal: {
+      type: `ParliamentJsonSchema`,
+      content: '',
+      contentDigest: createContentDigest(dummySchema)
+    }
+  })
+
   let i = 0
   for await (const file of repoFiles) {
     if (file.endsWith('.schema.json')) {
